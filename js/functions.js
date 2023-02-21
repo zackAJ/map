@@ -22,8 +22,8 @@ function drag(event, e) {
   let moveY = event["clientY"];
   let deltaX = moveX - clickX;
   let deltaY = moveY - clickY;
-  let xx = Xsvg + deltaX * 0.5;
-  let yy = Ysvg + deltaY * 0.5;
+  let xx = Xsvg + deltaX / (zoom);
+  let yy = Ysvg + deltaY / (zoom);
   svg.style.transform = `scale(${zoom}) translate(${xx}px, ${yy}px)`;
   resetX = xx;
   resetY = yy;

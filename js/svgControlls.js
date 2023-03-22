@@ -48,12 +48,11 @@ function svgControlls() {
   svgCont.addEventListener("mousedown", (e) => {
     e.preventDefault();
     svg.style.transition = "none";
-    svgCont.addEventListener(
-      "mousemove",
-      (dragCallback = (ev) => {
+    svgCont.addEventListener("mousemove",(dragCallback = (ev) => {
         classToggle(svgPaths, true, "grabbing");
         svgCont.classList.add("grabbing");
-        drag(ev, e);
+      drag(ev, e);
+
       })
     );
   });
@@ -72,6 +71,13 @@ function svgControlls() {
     svgCont.classList.remove("grabbing");
     classToggle(svgPaths, false, "grabbing");
   });
+  for (let i = 0; i < svgPaths.length; i++) {
+    svgPaths[i].addEventListener('dblclick', () => {
+      let wilaya = wilayaList[i].substring(0, i.length == 2 ? wilayaList[i].length - 3 : wilayaList[i].length - 2)
+      window.open(`https://www.fedoul.com/search?r=${wilaya}`, '_self');
+      // console.log('click');
+    })
+  }
 }
 
 export default { svgControlls }

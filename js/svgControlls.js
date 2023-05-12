@@ -74,8 +74,7 @@ function svgControlls() {
   for (let i = 0; i < svgPaths.length; i++) {
     svgPaths[i].addEventListener('dblclick', () => {
       let wilaya = wilayaList[i].substring(0, i.length == 2 ? wilayaList[i].length - 3 : wilayaList[i].length - 2)
-      window.open(`https://www.fedoul.com/search?r=${wilaya}`, '_self');
-      // console.log('click');
+      window.open(`https://en.wikipedia.org/w/index.php?search=${wilaya}`, '_blank');
     })
   }
 }

@@ -60,6 +60,7 @@
   #mapSection {
     display: flex;
     justify-content: center;
+    padding-inline:10px;
   }
 
   #mapCont {
@@ -97,19 +98,27 @@
   footer{
     background-color: #3e3e3e;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    align-self: stretch;
     padding: 10px;
     color: white;
-    width: 100%;
+    width: auto;
     margin-top: 10px;
+    padding: 10px;
   }
   a,a:visited{
     text-decoration: none;
-    color: darkslategray;
+    color: rgb(147, 192, 192);
     font-family: cursive;
     font-weight: 900;
   }
   a:hover{
     color:crimson;
+  }
+  footer p{
+    height: 20px;
+    padding: 0;
+    margin: 0;
   }

@@ -4,79 +4,36 @@ function svgControlls() {
   //zoom****************************************************
 
   //by mouse wheel
-  svgCont.addEventListener("wheel", (e) => {
-    svg.style.transition = "transform 500ms";
-    e.preventDefault();
-    if (zoom >= maxZoom) {
-      if (e.deltaY > 0) {
-        zoom -= 0.25;
-        svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
-      }
-    } else if (zoom <= minZoom) {
-      if (e.deltaY < 0) {
-        zoom += 0.25;
-        svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
-      }
-    } else if (zoom < maxZoom && zoom > minZoom) {
-      if (e.deltaY < 0) {
-        zoom += 0.25;
-        svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
-      } else if (e.deltaY > 0) {
-        zoom -= 0.25;
-        svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
-      }
-    }
-  });
+  svgCont.addEventListener("wheel", wheel);
   //by buttons
-  plusButton.addEventListener("click", function (e) {
-    svg.style.transition = "transform 500ms";
-    if (zoom < maxZoom) {
-      zoom += 0.5;
-      svg.style.transform = `scale(${zoom}) translate(${Xsvg}px,${Ysvg}px)`;
-    }
-  });
-  minusButton.addEventListener("click", (e) => {
-    svg.style.transition = "transform 500ms";
-
-    if (zoom > minZoom) {
-      zoom -= 0.5;
-      svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
-    }
-  });
+  plusButton.addEventListener("click", plus);
+  minusButton.addEventListener("click", minus);
 
   //drag****************************************************
-  svgCont.addEventListener("mousedown", (e) => {
-    e.preventDefault();
-    svg.style.transition = "none";
-    svgCont.addEventListener("mousemove",(dragCallback = (ev) => {
-        classToggle(svgPaths, true, "grabbing");
-        svgCont.classList.add("grabbing");
-      drag(ev, e);
+  svgCont.addEventListener("mousedown",(e)=> down(e,"mousemove"));
 
-      })
-    );
-  });
-
-  svgCont.addEventListener("mouseup", (e) => {
-    svgCont.classList.remove("grabbing");
-    classToggle(svgPaths, false, "grabbing");
-    svgCont.removeEventListener("mousemove", dragCallback);
-    Xsvg = resetX;
-    Ysvg = resetY;
-  });
-  svgCont.addEventListener("mouseleave", (e) => {
-    svgCont.removeEventListener("mousemove", dragCallback);
-    Xsvg = resetX;
-    Ysvg = resetY;
-    svgCont.classList.remove("grabbing");
-    classToggle(svgPaths, false, "grabbing");
-  });
+  svgCont.addEventListener("mouseup", (e) => up(e,"mousemove"));
+  svgCont.addEventListener("mouseleave", (e) => leave(e, "mousemove"));
+  
   for (let i = 0; i < svgPaths.length; i++) {
-    svgPaths[i].addEventListener('dblclick', () => {
-      let wilaya = wilayaList[i].substring(0, i.length == 2 ? wilayaList[i].length - 3 : wilayaList[i].length - 2)
-      window.open(`https://en.wikipedia.org/w/index.php?search=${wilaya}`, '_blank');
-    })
+    svgPaths[i].addEventListener('dblclick', (e)=>wiki(i));
   }
+  //phone stuff
+  svgCont.addEventListener('touchstart', (e) => {
+    console.log("touchstart");
+    down(e, "touchmove")
+  });
+
+  svgCont.addEventListener('touchend', (e) => { 
+    console.log("touchend");
+    up(e, "touchmove")
+  });
+  svgCont.addEventListener('touchcancel', (e) => { 
+    console.log("touchcancel");
+    leave(e, "touchmove")
+  });
+
+
 }
 
-export default { svgControlls }
+export default { svgControlls };

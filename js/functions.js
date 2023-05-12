@@ -15,11 +15,18 @@ function pos(el) {
     top: rect.top + window.scrollY,
   };
 }
-function drag(event, e) {
-  let clickX = e["clientX"];
-  let clickY = e["clientY"];
-  let moveX = event["clientX"];
-  let moveY = event["clientY"];
+function drag(event, e, isMobile) {
+  if (!isMobile) {
+    var clickX = e["clientX"];
+    var clickY = e["clientY"];
+    var moveX = event["clientX"];
+    var moveY = event["clientY"];
+  } else {
+    var clickX = e.touches[0]["clientX"];
+    var clickY = e.touches[0]["clientY"];
+    var moveX = event.touches[0]["clientX"];
+    var moveY = event.touches[0]["clientY"];
+  }
   let deltaX = moveX - clickX;
   let deltaY = moveY - clickY;
   let xx = Xsvg + deltaX / (zoom);
@@ -68,13 +75,13 @@ function minus(e){
     svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
   }
 }
-function down(e,move) {
+function down(e,move,isMobile) {
   e.preventDefault();
   svg.style.transition = "none";
   svgCont.addEventListener(move, dragCallback = (ev) => {
     classToggle(svgPaths, true, "grabbing");
     svgCont.classList.add("grabbing");
-    drag(ev, e);
+    drag(ev, e,isMobile);
   }
   );
 };
@@ -96,4 +103,4 @@ function wiki(i) {
   let wilaya = wilayaList[i].substring(0, i.length == 2 ? wilayaList[i].length - 3 : wilayaList[i].length - 2);
   window.open(`https://en.wikipedia.org/w/index.php?search=${wilaya}`, '_blank');
 }
-export default { classToggle, drag, wheel,plus,minus,down,up,leave,wiki }
+export default { classToggle,pos, drag, wheel,plus,minus,down,up,leave,wiki }

@@ -10,7 +10,7 @@ function svgControlls() {
   minusButton.addEventListener("click", minus);
 
   //drag****************************************************
-  svgCont.addEventListener("mousedown",(e)=> down(e,"mousemove"));
+  svgCont.addEventListener("mousedown",(e)=> down(e,"mousemove",false));
 
   svgCont.addEventListener("mouseup", (e) => up(e,"mousemove"));
   svgCont.addEventListener("mouseleave", (e) => leave(e, "mousemove"));
@@ -18,21 +18,25 @@ function svgControlls() {
   for (let i = 0; i < svgPaths.length; i++) {
     svgPaths[i].addEventListener('dblclick', (e)=>wiki(i));
   }
+
+
+
+
   //phone stuff
   svgCont.addEventListener('touchstart', (e) => {
-    console.log("touchstart");
-    down(e, "touchmove")
-  });
+    down(e, "touchmove",true)
+  },true);
 
   svgCont.addEventListener('touchend', (e) => { 
-    console.log("touchend");
     up(e, "touchmove")
-  });
+  },true);
   svgCont.addEventListener('touchcancel', (e) => { 
-    console.log("touchcancel");
     leave(e, "touchmove")
-  });
+  },true);
 
+  //by buttons
+  plusButton.addEventListener("touchstart", plus);
+  minusButton.addEventListener("touchstart", minus);
 
 }
 

@@ -125,7 +125,9 @@ function up(e, move) {
   svgCont.removeEventListener(move, dragCallback);
   Xsvg = resetX;
   Ysvg = resetY;
-  movable = true;
+  if (e.touches.length == 0) {
+    movable = true;
+  }
 }
 function leave(e, move) {
   svgCont.removeEventListener(move, dragCallback);

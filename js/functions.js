@@ -26,14 +26,47 @@ function drag(event, e, isMobile) {
     var clickY = e.touches[0]["clientY"];
     var moveX = event.touches[0]["clientX"];
     var moveY = event.touches[0]["clientY"];
+    if (e.touches[1]) {
+      let secondClickX = e.touches[1]["clientX"];
+      let secondClickY = e.touches[1]["clientY"];
+      movable = false;
+    }
+    if (event.touches[1]) {
+      //if second touch+move happens
+      // svg.style.transition = "transform 100ms";
+      let secondMoveX = event.touches[1]["clientX"];
+      let secondMoveY = event.touches[1]["clientY"];
+
+      let pinchX = Math.abs(secondMoveX) - Math.abs(moveX);
+      let pinchY = Math.abs(secondMoveY) - Math.abs(moveY);
+      let hypotenuse = Math.hypot(pinchX, pinchY); //phitagor to work with X&Y at the same time
+      if (oldHypo != 0) {
+        if (hypotenuse > oldHypo && zoom<maxZoom) {
+          zoom += 0.03;
+          let xx = Xsvg + hypotenuse / 2;
+          let yy = Ysvg + hypotenuse / 2;
+          svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
+        } else if (hypotenuse < oldHypo &&zoom>minZoom) {
+          zoom -= 0.03;
+          svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
+        }
+        oldHypo = hypotenuse;
+      } else {
+        oldHypo = hypotenuse;
+      }
+    }
+    if(movable){
+      let deltaX = moveX - clickX;
+      let deltaY = moveY - clickY;
+      let xx = Xsvg + deltaX / (zoom);
+      let yy = Ysvg + deltaY / (zoom);
+      svg.style.transform = `scale(${zoom}) translate(${xx}px, ${yy}px)`;
+      resetX = xx;
+      resetY = yy;
+    }
+
   }
-  let deltaX = moveX - clickX;
-  let deltaY = moveY - clickY;
-  let xx = Xsvg + deltaX / (zoom);
-  let yy = Ysvg + deltaY / (zoom);
-  svg.style.transform = `scale(${zoom}) translate(${xx}px, ${yy}px)`;
-  resetX = xx;
-  resetY = yy;
+
 }
 function wheel(e) {
 
@@ -67,7 +100,7 @@ function plus(e) {
     svg.style.transform = `scale(${zoom}) translate(${Xsvg}px,${Ysvg}px)`;
   }
 }
-function minus(e){
+function minus(e) {
   svg.style.transition = "transform 500ms";
 
   if (zoom > minZoom) {
@@ -75,24 +108,26 @@ function minus(e){
     svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
   }
 }
-function down(e,move,isMobile) {
+function down(e, move, isMobile) {
   e.preventDefault();
+  oldHypo = 0;
   svg.style.transition = "none";
   svgCont.addEventListener(move, dragCallback = (ev) => {
     classToggle(svgPaths, true, "grabbing");
     svgCont.classList.add("grabbing");
-    drag(ev, e,isMobile);
+    drag(ev, e, isMobile);
   }
   );
 };
-function up(e,move) {
+function up(e, move) {
   svgCont.classList.remove("grabbing");
   classToggle(svgPaths, false, "grabbing");
   svgCont.removeEventListener(move, dragCallback);
   Xsvg = resetX;
   Ysvg = resetY;
+  movable = true;
 }
-function leave(e,move) {
+function leave(e, move) {
   svgCont.removeEventListener(move, dragCallback);
   Xsvg = resetX;
   Ysvg = resetY;
@@ -103,4 +138,4 @@ function wiki(i) {
   let wilaya = wilayaList[i].substring(0, i.length == 2 ? wilayaList[i].length - 3 : wilayaList[i].length - 2);
   window.open(`https://en.wikipedia.org/w/index.php?search=${wilaya}`, '_blank');
 }
-export default { classToggle,pos, drag, wheel,plus,minus,down,up,leave,wiki }
+export default { classToggle, pos, drag, wheel, plus, minus, down, up, leave, wiki };

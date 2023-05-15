@@ -19,10 +19,10 @@ var resetY = 0.0;
 let dragCallback;
 var plusButton = document.getElementById("plus");
 var minusButton = document.getElementById("minus");
-
-
+var oldHypo = 0;
+var movable = true;
 
 
 export default{
-  svg, svgPaths, wilayaList, popUp, svgCont, Ysvg, Xsvg, svgPosition, zoom, maxZoom, minZoom, resetX, resetY, dragCallback, plusButton, minusButton
+  svg, svgPaths, wilayaList, popUp, svgCont, Ysvg, Xsvg, svgPosition, zoom, maxZoom, minZoom, resetX, resetY, dragCallback, plusButton, minusButton, oldHypo, movable
 }

@@ -22,7 +22,7 @@ function svgControlls() {
 
 
 
-  //phone stuff
+  //phone stuff**************************************
   svgCont.addEventListener('touchstart', (e) => {
     down(e, "touchmove",true)
   },true);

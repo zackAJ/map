@@ -10,7 +10,7 @@ function svgControlls() {
   minusButton.addEventListener("click", minus);
 
   //drag****************************************************
-  // svgCont.addEventListener("mousedown",(e)=> down(e,"mousemove",false));
+  svgCont.addEventListener("mousedown",(e)=> down(e,"mousemove",false));
 
   svgCont.addEventListener("mouseup", (e) => up(e,"mousemove"));
   svgCont.addEventListener("mouseleave", (e) => leave(e, "mousemove"));

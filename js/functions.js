@@ -16,6 +16,7 @@ function pos(el) {
   };
 }
 function drag(event, e, isMobile) {
+
   if (!isMobile) {
     var clickX = e["clientX"];
     var clickY = e["clientY"];
@@ -71,6 +72,7 @@ function drag(event, e, isMobile) {
 
 
   }
+ 
   if (movable) {
     let deltaX = moveX - clickX;
     let deltaY = moveY - clickY;
@@ -126,7 +128,6 @@ function down(e, move, isMobile) {
   if (isMobile) {
     e.preventDefault();
   }
-  e.preventDefault();
   oldHypo = 0;
   svg.style.transition = "none";
   svgCont.addEventListener(move, dragCallback = (ev) => {

@@ -21,13 +21,17 @@ function wilayaData() {
       popUp.style.display = "block";
       popUp.innerText = wilayaList[i];
       if (event.targetTouches.length == 1) {
-        popUp.classList.add('popMobile');
         [...svgPaths].forEach(path => {
           path.classList.remove('wilayaPath-hover');
-        })
+        });
+        popUp.classList.add('popMobile');
         svgPaths[i].classList.add('wilayaPath-hover');
+      } else {
+        popUp.classList.remove('popMobile');
+        svgPaths[i].classList.remove('wilayaPath-hover');
       }
     });
+    
 
   };
   //hide popUp

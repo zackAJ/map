@@ -35,7 +35,12 @@ function svgControlls() {
     up(e, "touchmove")
   },true);
 
- 
+  svgCont.addEventListener('mouseenter', e =>{
+    [...svgPaths].forEach(path => {
+      path.classList.remove('wilayaPath-hover');
+    });
+    popUp.classList.remove('popMobile');
+  });
 
   //by buttons
   plusButton.addEventListener("touchstart", plus);

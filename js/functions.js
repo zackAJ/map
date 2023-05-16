@@ -72,7 +72,7 @@ function drag(event, e, isMobile) {
 function wheel(e) {
 
   svg.style.transition = "transform 500ms";
-  e.preventDefault();
+  // e.preventDefault();
   if (zoom >= maxZoom) {
     if (e.deltaY > 0) {
       zoom -= 0.25;
@@ -127,9 +127,9 @@ function up(e, move) {
   Xsvg = resetX;
   Ysvg = resetY;
   // console.log(e);
-  // if (e. e.touches.length == 0) {
-  //   movable = true;
-  // }
+  if (e.touches && e.touches.length == 0) {
+    movable = true;
+  }
 }
 function leave(e, move) {
   svgCont.removeEventListener(move, dragCallback);

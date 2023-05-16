@@ -35,6 +35,8 @@ function svgControlls() {
     up(e, "touchmove")
   },true);
 
+ 
+
   //by buttons
   plusButton.addEventListener("touchstart", plus);
   minusButton.addEventListener("touchstart", minus);

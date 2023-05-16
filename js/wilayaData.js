@@ -17,6 +17,18 @@ function wilayaData() {
       popUp.style.display = "block";
       popUp.innerText = wilayaList[i];
     });
+    svgPaths[i].addEventListener("touchstart", (event) => {
+      popUp.style.display = "block";
+      popUp.innerText = wilayaList[i];
+      if (event.targetTouches.length == 1) {
+        popUp.classList.add('popMobile');
+        [...svgPaths].forEach(path => {
+          path.classList.remove('wilayaPath-hover');
+        })
+        svgPaths[i].classList.add('wilayaPath-hover');
+      }
+    });
+
   };
   //hide popUp
   svg.addEventListener("mouseleave", () => {

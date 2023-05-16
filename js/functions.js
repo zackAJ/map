@@ -27,8 +27,8 @@ function drag(event, e, isMobile) {
     var moveX = event.touches[0]["clientX"];
     var moveY = event.touches[0]["clientY"];
     if (e.touches[1]) {
-      let secondClickX = e.touches[1]["clientX"];
-      let secondClickY = e.touches[1]["clientY"];
+      // let secondClickX = e.touches[1]["clientX"];
+      // let secondClickY = e.touches[1]["clientY"];
       movable = false;
     }
     if (event.touches[1]) {
@@ -41,13 +41,13 @@ function drag(event, e, isMobile) {
       let pinchY = Math.abs(secondMoveY) - Math.abs(moveY);
       let hypotenuse = Math.hypot(pinchX, pinchY); //phitagor to work with X&Y at the same time
       if (oldHypo != 0) {
-        if (hypotenuse > oldHypo && zoom<maxZoom) {
-          zoom += 0.03;
+        if (hypotenuse > oldHypo && zoom < maxZoom) {
+          zoom += 0.06;
           let xx = Xsvg + hypotenuse / 2;
           let yy = Ysvg + hypotenuse / 2;
           svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
-        } else if (hypotenuse < oldHypo &&zoom>minZoom) {
-          zoom -= 0.03;
+        } else if (hypotenuse < oldHypo && zoom > minZoom) {
+          zoom -= 0.06;
           svg.style.transform = `scale(${zoom}) translate(${Xsvg}px, ${Ysvg}px)`;
         }
         oldHypo = hypotenuse;
@@ -55,16 +55,17 @@ function drag(event, e, isMobile) {
         oldHypo = hypotenuse;
       }
     }
-    if(movable){
-      let deltaX = moveX - clickX;
-      let deltaY = moveY - clickY;
-      let xx = Xsvg + deltaX / (zoom);
-      let yy = Ysvg + deltaY / (zoom);
-      svg.style.transform = `scale(${zoom}) translate(${xx}px, ${yy}px)`;
-      resetX = xx;
-      resetY = yy;
-    }
 
+
+  }
+  if (movable) {
+    let deltaX = moveX - clickX;
+    let deltaY = moveY - clickY;
+    let xx = Xsvg + deltaX / (zoom);
+    let yy = Ysvg + deltaY / (zoom);
+    svg.style.transform = `scale(${zoom}) translate(${xx}px, ${yy}px)`;
+    resetX = xx;
+    resetY = yy;
   }
 
 }
@@ -125,9 +126,10 @@ function up(e, move) {
   svgCont.removeEventListener(move, dragCallback);
   Xsvg = resetX;
   Ysvg = resetY;
-  if (e.touches.length == 0) {
-    movable = true;
-  }
+  // console.log(e);
+  // if (e. e.touches.length == 0) {
+  //   movable = true;
+  // }
 }
 function leave(e, move) {
   svgCont.removeEventListener(move, dragCallback);

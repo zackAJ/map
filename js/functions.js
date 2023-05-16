@@ -22,10 +22,23 @@ function drag(event, e, isMobile) {
     var moveX = event["clientX"];
     var moveY = event["clientY"];
   } else {
+
+
     var clickX = e.touches[0]["clientX"];
     var clickY = e.touches[0]["clientY"];
     var moveX = event.touches[0]["clientX"];
     var moveY = event.touches[0]["clientY"];
+    //popup to follow draged map on touch
+
+    let oldPos = parseInt(popUp.style.left.substring(0, popUp.style.left.length - 2));
+
+    // popUp.style.display = "block";
+    // popUp.style.left = -xx+ "px"  ;
+    // popUp.style.top = event.target.getBoundingClientRect().top - svgCont.getBoundingClientRect().top + "px";
+    // console.log(popUp.style.top);
+
+
+
     if (e.touches[1]) {
       // let secondClickX = e.touches[1]["clientX"];
       // let secondClickY = e.touches[1]["clientY"];
@@ -64,6 +77,22 @@ function drag(event, e, isMobile) {
     let xx = Xsvg + deltaX / (zoom);
     let yy = Ysvg + deltaY / (zoom);
     svg.style.transform = `scale(${zoom}) translate(${xx}px, ${yy}px)`;
+    if (e.targetTouches[0]) {
+      let a =popUp.style.left =
+       
+      (
+        Math.ceil(pos(event.srcElement).left) -
+        Math.ceil(pos(svgCont).left)
+        )
+        + "px";
+      console.log(a);
+      
+      popUp.style.top =
+(
+        Math.ceil(pos(event.srcElement).top)
+        - Math.ceil(pos(svgCont).top)
+        ) + "px";
+    }
     resetX = xx;
     resetY = yy;
   }
@@ -110,10 +139,11 @@ function minus(e) {
   }
 }
 function down(e, move, isMobile) {
-  e.preventDefault();
+  // e.preventDefault();
   oldHypo = 0;
   svg.style.transition = "none";
   svgCont.addEventListener(move, dragCallback = (ev) => {
+    ev.preventDefault();
     classToggle(svgPaths, true, "grabbing");
     svgCont.classList.add("grabbing");
     drag(ev, e, isMobile);

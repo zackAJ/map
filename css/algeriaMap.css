@@ -51,11 +51,11 @@
       padding-inline: 10px;
       padding-block: 15px;
       border-radius: 20px;
-      border-bottom-left-radius: 0;
-      position: fixed;
+      position: absolute;
       text-align: center;
       box-sizing: border-box;
       background-color: rgba(62, 62, 62, 0.7);
+      width:max-content ;
   }
 
   #mapSection {

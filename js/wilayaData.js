@@ -24,8 +24,8 @@ function wilayaData() {
   });
   //change popUp position
   svg.addEventListener("mousemove", (event) => {
-    popUp.style.left = 20 + event["clientX"] + "px";
-    popUp.style.top = -60 + event["clientY"] + "px";
+    popUp.style.left =20+ event["clientX"]- pos(svgCont).left + "px";
+    popUp.style.top =-60+ event["clientY"] - pos(svgCont).top + "px";
   });
 }
 export default { wilayaData }
